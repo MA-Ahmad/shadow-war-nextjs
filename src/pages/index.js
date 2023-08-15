@@ -1,8 +1,8 @@
 import React from 'react'
-import TwitterLoginButton from '@/components/TwitterLogin'
+import LoginButtons from '@/components/LoginButtons'
 
 function Index() {
-  return <TwitterLoginButton />
+  return <LoginButtons />
 }
 
 export default Index
