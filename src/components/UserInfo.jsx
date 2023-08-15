@@ -15,11 +15,10 @@ import {
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
-
-// const BASE_URL = 'http://localhost:3001'
-const BASE_URL = 'https://shadow-war-mission-backend-3a11b40a384a.herokuapp.com'
+import { BASE_URL } from '@/constants'
 
 const UserInfo = () => {
+  const [isSuccess, setIsSuccess] = useState(false)
   const [oauthVerifier, setOauthVerifier] = useState('')
   const [oauthToken, setOauthToken] = useState('')
   const [userInfo, setUserInfo] = useState('')
@@ -56,11 +55,12 @@ const UserInfo = () => {
       }
 
       axios
-        .post(`${BASE_URL}/complete_authentication`, postData)
+        .post(`${BASE_URL}/twitter/callback`, postData)
         .then((response) => {
           console.log('POST response:', response.data)
-          if (response.data.user_data) {
-            setUserInfo(response.data.user_data)
+          if (response.data.success) {
+            // setUserInfo(response.data.user_data)
+            setIsSuccess(response.data.success)
           }
           // Handle the response from the server as needed
         })
@@ -73,7 +73,12 @@ const UserInfo = () => {
 
   return (
     <>
-      {userInfo && (
+      {isSuccess && (
+        <Flex justifyContent="center" alignItems="center" height="100vh">
+          User logged in successfully
+        </Flex>
+      )}
+      {/* {userInfo && (
         <Container maxW="7xl" p={{ base: 5, md: 10 }}>
           <Center>
             <Box
@@ -139,7 +144,7 @@ const UserInfo = () => {
             </Box>
           </Center>
         </Container>
-      )}
+      )} */}
     </>
   )
 }
