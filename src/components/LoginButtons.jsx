@@ -28,14 +28,14 @@ const LoginButtons = () => {
       >
         Login with Twitter
       </Button>
-      {/* <Button
+      <Button
         colorScheme="purple"
         size="lg"
         onClick={handleDiscordLogin}
         ml={2}
       >
         Login with Discord
-      </Button> */}
+      </Button>
     </Flex>
   )
 }
