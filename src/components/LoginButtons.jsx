@@ -14,9 +14,7 @@ const LoginButtons = () => {
     const redirectURI =
       'https://dbf7-223-123-22-132.ngrok-free.app/discord/callback'
     const responseType = 'code'
-
     const discordAuthURL = `https://discord.com/oauth2/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=guilds`
-
     window.location.href = discordAuthURL
   }
 
