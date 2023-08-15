@@ -11,8 +11,7 @@ const LoginButtons = () => {
 
   const handleDiscordLogin = () => {
     const clientID = '1141036152636321865'
-    const redirectURI =
-      'https://shadow-war-nextjs-qv6nre1kv-ma-ahmad.vercel.app/discord/callback'
+    const redirectURI = 'https://shadow-war-nextjs.vercel.app/discord/callback'
     const responseType = 'code'
     const discordAuthURL = `https://discord.com/oauth2/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=code&scope=guilds`
     window.location.href = discordAuthURL
