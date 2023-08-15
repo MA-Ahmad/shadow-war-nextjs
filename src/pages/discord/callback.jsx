@@ -4,7 +4,7 @@ import { Flex } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { BASE_URL } from '@/constants'
 
-const UserInfo = () => {
+const Callback = () => {
   const [isSuccess, setIsSuccess] = useState(false)
   const router = useRouter()
 
@@ -23,11 +23,13 @@ const UserInfo = () => {
       .get(`${BASE_URL}/discord/callback?code=${code}`)
       .then((response) => {
         console.log('POST response:', response.data)
+        if (response.data.success) {
+          setIsSuccess(response.data.success)
+        }
         // setIsSuccess
         // if (response.data.user_data) {
         //   setUserInfo(response.data.user_data)
         // }
-        // Handle the response from the server as needed
       })
       .catch((error) => {
         console.error('POST error:', error)
@@ -45,4 +47,4 @@ const UserInfo = () => {
   )
 }
 
-export default UserInfo
+export default Callback
