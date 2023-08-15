@@ -16,7 +16,8 @@ import {
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
-const BASE_URL = 'http://localhost:3001'
+// const BASE_URL = 'http://localhost:3001'
+const BASE_URL = 'https://shadow-war-mission-backend-3a11b40a384a.herokuapp.com'
 
 const UserInfo = () => {
   const [oauthVerifier, setOauthVerifier] = useState('')
