@@ -1,9 +1,31 @@
-import React from 'react'
-import { Button, Flex } from '@chakra-ui/react'
+import React, { useState, useEffect } from 'react'
+import { Button, Flex, Stack } from '@chakra-ui/react'
 import { FaTwitter } from 'react-icons/fa'
 import { BASE_URL } from '@/constants'
+import {
+  clearLocalStorageCredentials,
+  getFromLocalStorage,
+} from '@/utils/storage'
+import Link from 'next/link'
 
 const LoginButtons = () => {
+  const [verified, setVerified] = useState({ twitter: false, discord: false })
+
+  useEffect(() => {
+    const twitterVerified = getFromLocalStorage('twitterVerified')
+    const disordVerified = getFromLocalStorage('discordVerified')
+
+    if (twitterVerified) {
+      setVerified((prev) => ({ ...prev, twitter: true }))
+    }
+    if (disordVerified) {
+      setVerified((prev) => ({ ...prev, discord: true }))
+    }
+    if (twitterVerified && disordVerified) {
+      clearLocalStorageCredentials()
+    }
+  }, [])
+
   const handleTwitterLogin = () => {
     const twitterLoginUrl = `${BASE_URL}/authorize_user`
     window.location.href = twitterLoginUrl
@@ -18,24 +40,52 @@ const LoginButtons = () => {
   }
 
   return (
-    <Flex justifyContent="center" alignItems="center" height="100vh">
-      <Button
-        leftIcon={<FaTwitter />}
-        colorScheme="blue"
-        size="lg"
-        onClick={handleTwitterLogin}
-      >
-        Login with Twitter
-      </Button>
-      <Button
-        colorScheme="purple"
-        size="lg"
-        onClick={handleDiscordLogin}
-        ml={2}
-      >
-        Login with Discord
-      </Button>
-    </Flex>
+    <Stack
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+    >
+      {verified.twitter ? (
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          p={4}
+          rounded="md"
+          bg="twitter.500"
+          color="white"
+        >
+          Twitter verified
+        </Flex>
+      ) : (
+        <Button
+          leftIcon={<FaTwitter />}
+          colorScheme="blue"
+          size="lg"
+          onClick={handleTwitterLogin}
+        >
+          Login with Twitter
+        </Button>
+      )}
+      {verified.discord ? (
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          p={4}
+          rounded="md"
+          bg="purple.500"
+          color="white"
+        >
+          Discord Verified
+        </Flex>
+      ) : (
+        <Button colorScheme="purple" size="lg" onClick={handleDiscordLogin}>
+          Login with Discord
+        </Button>
+      )}
+
+      {verified.discord && verified.twitter && <Link href="/login">Login</Link>}
+    </Stack>
   )
 }
 

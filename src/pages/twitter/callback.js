@@ -16,6 +16,7 @@ import {
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { BASE_URL } from '@/constants'
+import { getFromLocalStorage, setToLocalStorage } from '@/utils/storage'
 
 const Callback = () => {
   const [isSuccess, setIsSuccess] = useState(false)
@@ -47,17 +48,25 @@ const Callback = () => {
 
   const fetchUserInfo = (oauthVerifier, oauthToken) => {
     if (oauthVerifier) {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Auth-Email': getFromLocalStorage('authEmail'),
+        'Auth-Token': getFromLocalStorage('authToken'),
+      }
+
       const postData = {
         oauthVerifier: oauthVerifier,
         oauthToken: oauthToken,
       }
 
       axios
-        .post(`${BASE_URL}/twitter/callback`, postData)
+        .post(`${BASE_URL}/twitter/callback`, postData, { headers })
         .then((response) => {
           console.log('POST response:', response.data)
           if (response.data.success) {
+            setToLocalStorage('twitterVerified', true)
             setIsSuccess(response.data.success)
+            router.push('/social-login')
           }
           // Handle the response from the server as needed
         })

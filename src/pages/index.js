@@ -1,8 +1,8 @@
 import React from 'react'
-import LoginButtons from '@/components/LoginButtons'
+import EmailSignup from '@/components/EmailSignup'
 
 function Index() {
-  return <LoginButtons />
+  return <EmailSignup />
 }
 
 export default Index
