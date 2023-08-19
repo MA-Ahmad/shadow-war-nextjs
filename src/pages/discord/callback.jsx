@@ -12,9 +12,9 @@ const Callback = () => {
   useEffect(() => {
     const { code } = router.query
 
-    if (code) {
-      apiCall(code)
-    }
+    // if (code) {
+    //   apiCall(code)
+    // }
 
     console.log('code =====>', code)
   }, [router.query])
